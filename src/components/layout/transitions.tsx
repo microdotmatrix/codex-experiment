@@ -161,6 +161,7 @@ const animationTypes = [
   "animate-slide-to-left",
   "animate-slide-to-right",
   "animate-morph",
+  "animate-expand",
 ] as const;
 
 /**

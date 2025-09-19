@@ -8,6 +8,27 @@
       "when": 1757942396094,
       "tag": "0000_chunky_gladiator",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1758234449773,
+      "tag": "0001_chubby_proteus",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1758237032916,
+      "tag": "0002_legal_ego",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1758284556467,
+      "tag": "0003_big_stardust",
+      "breakpoints": true
     }
   ]
 }

@@ -3,12 +3,11 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   experimental: {
-    cacheComponents: true,
-    clientSegmentCache: true,
     reactCompiler: true,
     viewTransition: true,
     useLightningcss: true,
     authInterrupts: true,
+    ppr: "incremental",
   },
   typescript: {
     ignoreBuildErrors: true,
@@ -44,6 +43,11 @@ const nextConfig: NextConfig = {
         hostname: "*.googleusercontent.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "img.clerk.com",
+        pathname: "/**",
+      }
     ],
   },
 };
