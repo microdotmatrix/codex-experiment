@@ -12,6 +12,7 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import { toast } from "sonner";
@@ -72,6 +73,7 @@ export const DocumentEditor = ({
   anchors,
 }: DocumentEditorProps) => {
   const [markdown, setMarkdown] = useState(initialContent);
+  const markdownRef = useRef(initialContent);
   const [state, formAction, isPending] = useActionState<EditorActionState, FormData>(
     updateDocumentContentAction,
     initialState
@@ -89,7 +91,12 @@ export const DocumentEditor = ({
 
   useEffect(() => {
     setMarkdown(initialContent);
+    markdownRef.current = initialContent;
   }, [initialContent]);
+
+  useEffect(() => {
+    markdownRef.current = markdown;
+  }, [markdown]);
 
   const handleSelection = useCallback(
     (instance: Editor) => {
@@ -108,7 +115,7 @@ export const DocumentEditor = ({
         return;
       }
 
-      const snapshot = getMarkdownFromEditor(instance) || markdown;
+      const snapshot = getMarkdownFromEditor(instance) || markdownRef.current;
       let anchorStart = snapshot.indexOf(rawText);
       if (anchorStart < 0) {
         anchorStart = snapshot.indexOf(cleaned);
@@ -123,7 +130,7 @@ export const DocumentEditor = ({
         end,
       });
     },
-    [onSelectionChange, markdown]
+    [onSelectionChange]
   );
 
   const extensions = useMemo<Extension[]>(() => {
