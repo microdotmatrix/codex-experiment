@@ -22,6 +22,7 @@ interface AnimatedInputProps {
   placeholder?: string;
   className?: string;
   minLength?: number;
+  maxLength?: number;
 }
 
 export function AnimatedInput({
@@ -36,6 +37,7 @@ export function AnimatedInput({
   required = false,
   className = "",
   minLength = 0,
+  maxLength,
 }: AnimatedInputProps) {
   const [isFocused, setIsFocused] = useState(false);
   const [hasValue, setHasValue] = useState(
@@ -126,6 +128,7 @@ export function AnimatedInput({
           className={cn(inputClasses, className ? className : "h-32")}
           required={required}
           placeholder={placeholder}
+          maxLength={maxLength}
         />
       ) : (
         <Input
@@ -142,6 +145,7 @@ export function AnimatedInput({
           required={required}
           placeholder={placeholder}
           minLength={minLength}
+          maxLength={maxLength}
         />
       )}
     </div>
