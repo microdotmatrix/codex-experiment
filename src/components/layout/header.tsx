@@ -8,6 +8,8 @@ import {
 } from "@clerk/nextjs";
 import { ThemeToggle } from "../theme/toggle";
 import { Icon } from "../ui/icon";
+import { buttonVariants } from "../ui/button";
+import { cn } from "@/lib/utils";
 
 export const Header = () => {
   return (
@@ -25,7 +27,21 @@ export const Header = () => {
           </div>
         </SignedOut>
         <SignedIn>
-          <UserButton />
+          <nav className="flex items-center gap-2">
+            <Link
+              href="/dashboard"
+              className={cn(buttonVariants({ variant: "ghost" }), "h-9 px-3 text-sm")}
+            >
+              Documents
+            </Link>
+            <Link
+              href="/dashboard/entries"
+              className={cn(buttonVariants({ variant: "outline" }), "h-9 px-3 text-sm")}
+            >
+              Entries
+            </Link>
+            <UserButton afterSignOutUrl="/" />
+          </nav>
         </SignedIn>
         <ThemeToggle />
       </section>
