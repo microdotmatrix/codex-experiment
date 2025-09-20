@@ -52,7 +52,9 @@ export default async function DashboardPage() {
         </p>
       </section>
 
-      <CreateDocumentForm />
+      <section className="max-w-lg">
+        <CreateDocumentForm />
+      </section>
 
       <section className="space-y-4">
         <header className="flex items-center justify-between">

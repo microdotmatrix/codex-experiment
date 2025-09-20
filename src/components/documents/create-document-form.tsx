@@ -1,17 +1,17 @@
 "use client";
 
-import { useActionState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
+import { useRouter } from "next/navigation";
+import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
 
-import { createDocument } from "@/lib/db/mutations/documents";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
+import { createDocument } from "@/lib/db/mutations/documents";
 import type { ActionState } from "@/lib/utils";
+import { cn } from "@/lib/utils";
+import { AnimatedInput } from "../elements/form/animated-input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 
 type CreateDocumentState = ActionState & {
   documentId?: string;
@@ -44,54 +44,50 @@ export const CreateDocumentForm = () => {
   }, [state, router]);
 
   return (
-    <motion.section
+    <motion.div
       layout
       className={cn(
         "relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-br from-background/60 via-background/40 to-primary/10 p-6 shadow-lg",
-        "before:absolute before:inset-0 before:-z-10 before:animate-pulse before:bg-[radial-gradient(circle_at_top,_rgba(88,101,242,0.15),_transparent_55%)]"
+        "before:absolute before:inset-0 before:-z-10 before:animate-pulse before:animation-duration-[4s] before:bg-[radial-gradient(circle_at_top,_rgba(88,101,242,0.15),_transparent_55%)]"
       )}
     >
-      <form action={formAction} className="space-y-4">
+      <form action={formAction} className="space-y-6">
         <div>
-          <Label htmlFor="title" className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
-            Codename
-          </Label>
-          <Input
-            id="title"
+          <AnimatedInput
             name="title"
+            label="Codename"
             placeholder="Nebula Protocol"
             required
             minLength={3}
-            className="mt-1.5 border-border/70 bg-background/80 backdrop-blur transition focus:border-primary/70"
           />
         </div>
 
         <div className="grid gap-4 sm:grid-cols-[2fr,1fr]">
           <div>
-            <Label htmlFor="summary" className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
-              Mission Brief
-            </Label>
-            <Textarea
-              id="summary"
+            <AnimatedInput
+              type="textarea"
+              label="Mission Brief"
               name="summary"
               placeholder="Outline the intent, goals, or collaborators for this document."
-              rows={3}
-              className="mt-1.5 resize-none border-border/70 bg-background/80"
+              className="resize-none h-24"
             />
           </div>
           <div>
-            <Label htmlFor="visibility" className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
+            <Label htmlFor="visibility" className="text-xs uppercase tracking-[0.3em] text-muted-foreground ml-0.75">
               Visibility
             </Label>
-            <select
-              id="visibility"
+            <Select
               name="visibility"
               defaultValue="private"
-              className="mt-1.5 w-full rounded-lg border border-border/70 bg-background/80 px-3 py-2 text-sm text-foreground shadow-inner outline-none transition focus:border-primary/60 focus:ring-2 focus:ring-primary/20"
             >
-              <option value="private">Private workspace</option>
-              <option value="public">Public showcase</option>
-            </select>
+              <SelectTrigger className="mt-1 w-full rounded-lg border border-input/50 px-3 py-2 text-sm shadow-inner outline-none transition focus:border-primary/60 focus:ring-2 focus:ring-primary/20">
+                <SelectValue placeholder="Visibility" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="private">Private workspace</SelectItem>
+                <SelectItem value="public">Public showcase</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </div>
 
@@ -102,6 +98,6 @@ export const CreateDocumentForm = () => {
           </Button>
         </div>
       </form>
-    </motion.section>
+    </motion.div>
   );
 };
