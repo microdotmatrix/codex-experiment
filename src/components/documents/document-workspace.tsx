@@ -54,6 +54,24 @@ export const DocumentWorkspace = ({
 }: DocumentWorkspaceProps) => {
   const [selection, setSelection] = useState<SelectionSnapshot | null>(null);
 
+  const anchoredComments = useMemo(() => {
+    const flatten = (threads: CommentThread[]): CommentThread[] => {
+      return threads.flatMap((thread) => [thread, ...flatten(thread.replies ?? [])]);
+    };
+
+    return flatten(comments)
+      .filter((comment) => comment.anchorStart != null || (comment.anchorText && comment.anchorText.trim().length > 0))
+      .map((comment) => ({
+        id: comment.id,
+        kind: comment.kind,
+        status: comment.status,
+        suggestionStatus: comment.suggestionStatus,
+        start: comment.anchorStart,
+        end: comment.anchorEnd,
+        text: comment.anchorText,
+      }));
+  }, [comments]);
+
   const activeCollaborator = useMemo(() => {
     return document.collaborators.find(
       (collaborator) =>
@@ -93,6 +111,7 @@ export const DocumentWorkspace = ({
               updatedAt={document.updatedAt}
               canEdit={viewer.isOwner}
               onSelectionChange={setSelection}
+              anchors={anchoredComments}
             />
           </div>
         </SharedTransition>
